@@ -1,0 +1,23 @@
+{{- if .Values.webserver.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rails.name" . }}
+  lables:
+    environment: {{ include "rails.environment" . }}
+    product: {{ .Values.product }}
+    helm.sh/chart: {{ include "rails.chart" . }}
+    app.kubernetes.io/name: {{ include "rails.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.webserver.port }}
+    targetPort: {{ .Values.webserver.port }}
+    protocol: TCP
+  selector:
+    app: {{ include "rails.name" . }}
+    app.kubernetes.io/name: {{ include "rails.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

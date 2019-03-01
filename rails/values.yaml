@@ -1,0 +1,74 @@
+# Default values for rails.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+product: myproduct
+environment: staging
+
+image:
+  repository: bitnami/ruby-example:0.0.1
+  pullPolicy: IfNotPresent
+  
+image_private_registry:
+  enabled: false
+  secret: docker-login
+
+webserver:
+  enabled: true
+  custom_configs: false
+  custom_config_file: /config/settings.yml
+  migrations: false
+  replicaCount: 1
+  port: 8080
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m 
+    limits:
+      memory: 128Mi
+      cpu: 100m
+
+worker:
+  enabled: false
+  custom_configs: false
+  custom_config_file: /config/settings.yml
+  migrations: false
+  replicaCount: 1
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m 
+    limits:
+      memory: 128Mi
+      cpu: 100m
+
+replica:
+  minReadySeconds: 1 #minimum number of seconds before Kubernetes starts considering the Pods healthy
+  progressDeadlineSeconds: 60 #how much the Deployment has to wait before it deduces that it cannot progress due to a failure to run a Pod”
+  revisionHistoryLimit: 5 #number of ReplicaSet we can rollback
+  strategy: RollingUpdate
+
+service:
+  type: ClusterIP
+  annotations: {}
+
+securityContextID: 100
+
+resources:
+  requests:
+    memory: 128Mi
+    cpu: 100m 
+  limits:
+    memory: 128Mi
+    cpu: 100m
+
+
+datadog:
+  enabled: false
+
+probes:
+  enabled: false
+  url: /status
+  initialDelaySeconds: 5
+  timeoutSeconds: 1
+  periodSeconds: 15
