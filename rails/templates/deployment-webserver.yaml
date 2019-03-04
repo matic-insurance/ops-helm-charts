@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "rails.name" . }}
   lables:
-    environment: {{ include "rails.environment" . }}
+    environment: {{ include "rails.environment" . }}-webserver
     product: {{ .Values.product }}
     helm.sh/chart: {{ include "rails.chart" . }}
     app.kubernetes.io/name: {{ include "rails.name" . }}

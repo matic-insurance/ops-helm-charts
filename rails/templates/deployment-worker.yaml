@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "rails.name" . }}
+  name: {{ include "rails.name" . }}-worker
   lables:
     environment: {{ include "rails.environment" . }}
     product: {{ .Values.product }}
