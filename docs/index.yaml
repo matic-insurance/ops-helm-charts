@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  nginx:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-03-04T18:04:32.728349+02:00
+    description: A Nginx Helm chart for Kubernetes
+    digest: 2cd6938cba5823e70eb07efc4a7fa609226772e9103936901d666e1c53907bab
+    name: nginx
+    urls:
+    - https://matic-insurance.github.io/ops-helm-charts/nginx-0.1.0.tgz
+    version: 0.1.0
+  rails:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-03-04T18:04:32.729319+02:00
+    description: A Helm chart deploying Ruby on Rails app to Kubernetes
+    digest: 2d5609b397e971d97d252c02a745847b35c47036de4cef42d49f10cc51407d42
+    name: rails
+    urls:
+    - https://matic-insurance.github.io/ops-helm-charts/rails-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-03-04T18:04:32.713755+02:00
