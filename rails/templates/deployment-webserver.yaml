@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "rails.name" . }}
+  name: {{ include "rails.name" . }}-webserver
   lables:
-    environment: {{ include "rails.environment" . }}-webserver
+    environment: {{ include "rails.environment" . }}
     product: {{ .Values.product }}
     helm.sh/chart: {{ include "rails.chart" . }}
     app.kubernetes.io/name: {{ include "rails.name" . }}
