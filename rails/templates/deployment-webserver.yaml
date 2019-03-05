@@ -30,7 +30,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         environment: {{ include "rails.environment" . }}
         product: {{ .Values.product }}
-        app: {{ include "rails.name" . }}
+        app: {{ include "rails.name" . }}-webserver
     spec:
       {{ if .Values.webserver.migrations -}}
       initContainers:
