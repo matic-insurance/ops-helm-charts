@@ -10,6 +10,7 @@ metadata:
     app.kubernetes.io/name: {{ include "rails.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: {{ include "rails.name" . }}-webserver
 spec:
   replicas: {{ .Values.webserver.replicaCount }}
   selector:
