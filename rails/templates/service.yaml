@@ -17,7 +17,7 @@ spec:
     targetPort: {{ .Values.webserver.port }}
     protocol: TCP
   selector:
-    app: {{ include "rails.name" . }}
+    app: {{ include "rails.name" . }}-webserver
     app.kubernetes.io/name: {{ include "rails.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

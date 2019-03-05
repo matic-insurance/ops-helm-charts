@@ -16,7 +16,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "rails.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-      app: {{ include "rails.name" . }}
+      app: {{ include "rails.name" . }}-webserver
   minReadySeconds: {{ .Values.replica.minReadySeconds }}
   progressDeadlineSeconds: {{ .Values.replica.progressDeadlineSeconds }}
   revisionHistoryLimit: {{ .Values.replica.revisionHistoryLimit }}
