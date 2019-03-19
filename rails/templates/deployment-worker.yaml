@@ -3,6 +3,10 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ include "rails.name" . }}-worker
+  {{- if .Values.reloader.enabled -}}
+  annotations:
+    reloader.stakater.com/auto: "true"
+  {{- end }}
   lables:
     environment: {{ include "rails.environment" . }}
     product: {{ .Values.product }}
