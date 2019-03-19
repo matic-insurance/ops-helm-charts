@@ -43,7 +43,7 @@ worker:
       cpu: 100m
 
 reloader:
-  enabled: true
+  enabled: false
 
 replica:
   minReadySeconds: 1 #minimum number of seconds before Kubernetes starts considering the Pods healthy

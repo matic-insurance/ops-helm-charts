@@ -11,4 +11,4 @@ $ git commit -av
 $ git push origin master
 ```
 
-From there, I we can add repo `helm repo add helm-charts https://matic-insurance.github.io/ops-helm-charts`
+From there, we can add repo `helm repo add helm-charts https://matic-insurance.github.io/ops-helm-charts`

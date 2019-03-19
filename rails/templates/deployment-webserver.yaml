@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ include "rails.name" . }}-webserver
-  {{- if .Values.reloader.enabled -}}
+  {{- if .Values.reloader.enabled }}
   annotations:
     reloader.stakater.com/auto: "true"
   {{- end }}
