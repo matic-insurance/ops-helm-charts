@@ -15,8 +15,9 @@ image_private_registry:
 
 webserver:
   enabled: true
-  custom_configs: false
-  custom_config_file: /config/settings.yml
+  custom_configs: true
+  custom_config_files: 
+  - /config/settings.yml
   migrations: false
   replicaCount: 1
   port: 8080
@@ -29,9 +30,10 @@ webserver:
       cpu: 100m
 
 worker:
-  enabled: false
-  custom_configs: false
-  custom_config_file: /config/settings.yml
+  enabled: true
+  custom_configs: true
+  custom_config_files: 
+  - /config/settings.yml
   migrations: false
   replicaCount: 1
   resources:

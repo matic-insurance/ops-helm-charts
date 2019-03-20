@@ -47,10 +47,13 @@ spec:
         - secretRef:
            name: {{ .Values.product }}-envvars
         volumeMounts:
-          - name: {{ .Values.product }}-{{ base .Values.worker.custom_config_file | replace "." "-" }}-vol
-            mountPath: {{ .Values.worker.custom_config_file }}
-            subPath: {{ base .Values.worker.custom_config_file }}
+          {{- $product := .Values.product -}}
+          {{- range $index, $config := .Values.worker.custom_config_files}}
+          - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+            mountPath: {{ $config }}
+            subPath: {{ base $config }}
             readOnly: true
+          {{- end }}
         {{- end }}
       {{- end }}
       containers:
@@ -70,10 +73,13 @@ spec:
         - secretRef:
            name: {{ .Values.product }}-envvars
         volumeMounts:
-          - name: {{ .Values.product }}-{{ base .Values.worker.custom_config_file | replace "." "-" }}-vol
-            mountPath: {{ .Values.worker.custom_config_file }}
-            subPath: {{ base .Values.worker.custom_config_file }}
+          {{- $product := .Values.product -}}
+          {{- range $index, $config := .Values.worker.custom_config_files}}
+          - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+            mountPath: {{ $config }}
+            subPath: {{ base $config }}
             readOnly: true
+          {{- end }}
         {{- end }}
         {{- if .Values.probes.enabled }}
         readinessProbe:
@@ -102,8 +108,11 @@ spec:
       {{- end }}
       {{ if .Values.worker.custom_configs -}}
       volumes:
-        - name: {{ .Values.product }}-{{ base .Values.worker.custom_config_file | replace "." "-" }}-vol
-          secret:
-            secretName: {{ .Values.product }}-{{ base .Values.worker.custom_config_file | replace "." "-" }}
-      {{- end }}
+        {{- $product := .Values.product -}}
+        {{- range $index, $config := .Values.worker.custom_config_files}}
+        - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+          secret:           
+            secretName: {{ $product }}-{{ base $config | replace "." "-" }}
+        {{- end }}
+      {{- end }} 
 {{- end }}
