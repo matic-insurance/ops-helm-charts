@@ -15,7 +15,7 @@ image_private_registry:
 
 webserver:
   enabled: true
-  custom_configs: true
+  custom_configs: false
   custom_config_files: 
   - /config/settings.yml
   migrations: false
@@ -30,11 +30,13 @@ webserver:
       cpu: 100m
 
 worker:
-  enabled: true
-  custom_configs: true
+  enabled: false
+  custom_configs: false
   custom_config_files: 
   - /config/settings.yml
   migrations: false
+  command:
+  - "bundle exec sidekiq -q default -c 20"
   replicaCount: 1
   resources:
     requests:

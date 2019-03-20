@@ -47,9 +47,8 @@ spec:
         - secretRef:
            name: {{ .Values.product }}-envvars
         volumeMounts:
-          {{- $product := .Values.product -}}
           {{- range $index, $config := .Values.worker.custom_config_files}}
-          - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+          - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
             mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
@@ -57,62 +56,64 @@ spec:
         {{- end }}
       {{- end }}
       containers:
-      - name: {{ include "rails.name" . }}-worker
-        image: {{ .Values.image.repository }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh","-c","bundle exec sidekiq -q default -c 20"]
-        env:      
-        {{ if .Values.datadog.enabled -}}
+      {{- $rails_name := include "rails.name" . -}}
+      {{- range $index, $command := .Values.worker.command }}
+      - name: {{ $rails_name }}-worker-{{ $index }}
+        image: {{ $.Values.image.repository }}
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        command: ["sh","-c","{{ $command }}"]
+        {{ if $.Values.datadog.enabled -}}
+        env:
         - name: DD_AGENT_HOST
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
         {{- end }}
-        {{- if .Values.worker.custom_configs }}
+        {{- if $.Values.worker.custom_configs }}
         envFrom:
         - secretRef:
-           name: {{ .Values.product }}-envvars
+           name: {{ $.Values.product }}-envvars
         volumeMounts:
-          {{- $product := .Values.product -}}
-          {{- range $index, $config := .Values.worker.custom_config_files}}
-          - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+          {{- range $index, $config := $.Values.worker.custom_config_files}}
+          - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
             mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
           {{- end }}
         {{- end }}
-        {{- if .Values.probes.enabled }}
+        {{- if $.Values.probes.enabled }}
         readinessProbe:
           httpGet:
-            path: {{ .Values.probes.url }}
-            port: {{ .Values.probes.port }}
-          initialDelaySeconds: {{ .Values.probes.initialDelaySeconds }}
-          timeoutSeconds: {{ .Values.probes.timeoutSeconds }}
-          periodSeconds: {{ .Values.probes.periodSeconds }}
+            path: {{ $.Values.probes.url }}
+            port: {{ $.Values.probes.port }}
+          initialDelaySeconds: {{ $.Values.probes.initialDelaySeconds }}
+          timeoutSeconds: {{ $.Values.probes.timeoutSeconds }}
+          periodSeconds: {{ $.Values.probes.periodSeconds }}
         livenessProbe:
           httpGet:
-            path: {{ .Values.probes.url }}
-            port: {{ .Values.probes.port }}
-          initialDelaySeconds: {{ .Values.probes.initialDelaySeconds }}
-          timeoutSeconds: {{ .Values.probes.timeoutSeconds }}
-          periodSeconds: {{ .Values.probes.periodSeconds }}
+            path: {{ $.Values.probes.url }}
+            port: {{ $.Values.probes.port }}
+          initialDelaySeconds: {{ $.Values.probes.initialDelaySeconds }}
+          timeoutSeconds: {{ $.Values.probes.timeoutSeconds }}
+          periodSeconds: {{ $.Values.probes.periodSeconds }}
         {{- end }}
+        resources:
+{{ toYaml $.Values.resources | indent 10 }}
+      {{- if $.Values.image_private_registry.enabled }}
+      imagePullSecrets:
+      - name: {{ $.Values.image_private_registry.secret }}
+      {{- end }}
+      {{- end }}
       securityContext:
         fsGroup: {{ .Values.securityContextID }}
         runAsUser: {{ .Values.securityContextID }}
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
-      {{- if .Values.image_private_registry.enabled }}
-      imagePullSecrets:
-      - name: {{ .Values.image_private_registry.secret }}
-      {{- end }}
-      {{ if .Values.worker.custom_configs -}}
+      {{ if $.Values.worker.custom_configs -}}
       volumes:
-        {{- $product := .Values.product -}}
-        {{- range $index, $config := .Values.worker.custom_config_files}}
-        - name: {{ $product }}-{{ base $config | replace "." "-" }}-vol
+        {{- range $index, $config := $.Values.worker.custom_config_files}}
+        - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
           secret:           
-            secretName: {{ $product }}-{{ base $config | replace "." "-" }}
+            secretName: {{ $.Values.product }}-{{ base $config | replace "." "-" }}
         {{- end }}
-      {{- end }} 
+        {{- end }}
+
 {{- end }}
