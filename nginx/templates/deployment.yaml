@@ -2,6 +2,10 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ include "nginx.name" . }}
+  {{- if .Values.reloader.enabled }}
+  annotations:
+    reloader.stakater.com/auto: "true"
+  {{- end }}
   lables:
     environment: {{ include "nginx.environment" . }}
     product: {{ .Values.product }}

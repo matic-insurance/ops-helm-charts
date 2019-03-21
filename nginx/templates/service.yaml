@@ -24,5 +24,3 @@ spec:
     app: {{ include "nginx.name" . }}
     app.kubernetes.io/name: {{ include "nginx.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-
-

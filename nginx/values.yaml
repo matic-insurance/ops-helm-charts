@@ -29,6 +29,9 @@ custom_configs:
   enabled: false
   configmap_name: configmap-nginx
 
+reloader:
+  enabled: false
+
 replica:
   replicaCount: 1
   minReadySeconds: 1 #minimum number of seconds before Kubernetes starts considering the Pods healthy
