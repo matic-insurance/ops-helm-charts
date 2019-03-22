@@ -78,7 +78,7 @@ spec:
         volumeMounts:
           {{- range $index, $config := .Values.webserver.custom_config_files}}
           - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
-            mountPath: {{ $.Values.product }}
+            mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
           {{- end }}
