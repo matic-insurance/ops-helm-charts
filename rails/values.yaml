@@ -16,9 +16,13 @@ image_private_registry:
 webserver:
   enabled: true
   custom_configs: false
+  command: "bundle exec puma"
   custom_config_files: 
   - /config/settings.yml
-  migrations: false
+  migrations:
+    enabled: false
+    command: "bundle exec rake db:migrate"
+  command: "bundle exec puma"
   replicaCount: 1
   port: 8080
   resources:
@@ -32,11 +36,13 @@ webserver:
 worker:
   enabled: false
   custom_configs: false
-  custom_config_files: 
-  - /config/settings.yml
-  migrations: false
   command:
   - "bundle exec sidekiq -q default -c 20"
+  custom_config_files: 
+  - /config/settings.yml
+  migrations:
+    enabled: false
+    command: "bundle exec rake db:abort_if_pending_migrations"
   replicaCount: 1
   resources:
     requests:

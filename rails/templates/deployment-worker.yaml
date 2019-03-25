@@ -36,12 +36,12 @@ spec:
         product: {{ .Values.product }}
         app: {{ include "rails.name" . }}-worker
     spec:
-      {{ if .Values.worker.migrations -}}
+      {{ if .Values.worker.migrations.enabled -}}
       initContainers:
       - name: {{ include "rails.name" . }}-migrations
         image: {{ .Values.image.repository }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh","-c","bundle exec rake db:abort_if_pending_migrations"]
+        command: ["sh","-c","{{ .Values.worker.migrations.command }}"]
         {{ if .Values.worker.custom_configs -}}
         envFrom:
         - secretRef:

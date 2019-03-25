@@ -36,12 +36,12 @@ spec:
         product: {{ .Values.product }}
         app: {{ include "rails.name" . }}-webserver
     spec:
-      {{ if .Values.webserver.migrations -}}
+      {{ if .Values.webserver.migrations.enabled -}}
       initContainers:
       - name: {{ include "rails.name" . }}-migrations
         image: {{ .Values.image.repository }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh","-c","bundle exec rake db:migrate"]
+        command: ["sh","-c","{{ .Values.webserver.migrations.command }}"]
         {{ if .Values.webserver.custom_configs -}}
         envFrom:
         - secretRef:
@@ -59,7 +59,7 @@ spec:
       - name: {{ include "rails.name" . }}-webserver
         image: {{ .Values.image.repository }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh","-c","bundle exec puma"]
+        command: ["sh","-c","{{ .Values.webserver.command }}"]
         ports:
         - containerPort: {{ .Values.webserver.port }}
         env:
