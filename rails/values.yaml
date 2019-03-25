@@ -61,15 +61,6 @@ service:
 
 securityContextID: 100
 
-resources:
-  requests:
-    memory: 128Mi
-    cpu: 100m 
-  limits:
-    memory: 128Mi
-    cpu: 100m
-
-
 datadog:
   enabled: false
 
