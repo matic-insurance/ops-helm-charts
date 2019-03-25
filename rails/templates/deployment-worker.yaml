@@ -99,10 +99,10 @@ spec:
         {{- end }}
         resources:
 {{ toYaml $.Values.worker.resources | indent 10 }}
+      {{- end }}
       {{- if $.Values.image_private_registry.enabled }}
       imagePullSecrets:
       - name: {{ $.Values.image_private_registry.secret }}
-      {{- end }}
       {{- end }}
       securityContext:
         fsGroup: {{ .Values.securityContextID }}
