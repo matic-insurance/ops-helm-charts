@@ -13,12 +13,15 @@ image_private_registry:
   enabled: false
   secret: docker-login
 
+custom_configs:
+  enabled: true
+  files:
+  - /app/settings.yml
+  - /app/config.yml
+
 webserver:
   enabled: true
-  custom_configs: false
   command: "bundle exec puma"
-  custom_config_files: 
-  - /config/settings.yml
   migrations:
     enabled: false
     command: "bundle exec rake db:migrate"
@@ -35,11 +38,8 @@ webserver:
 
 worker:
   enabled: false
-  custom_configs: false
   command:
   - "bundle exec sidekiq -q default -c 20"
-  custom_config_files: 
-  - /config/settings.yml
   migrations:
     enabled: false
     command: "bundle exec rake db:abort_if_pending_migrations"

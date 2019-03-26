@@ -42,13 +42,13 @@ spec:
         image: {{ .Values.image.repository }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["sh","-c","{{ .Values.worker.migrations.command }}"]
-        {{ if .Values.worker.custom_configs -}}
+        {{ if .Values.custom_configs.enabled -}}
         envFrom:
         - secretRef:
            name: {{ .Values.product }}-envvars
         volumeMounts:
-          {{- range $index, $config := .Values.worker.custom_config_files}}
-          - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
+          {{- range $index, $config := .Values.custom_configs.files}}
+          - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
             mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
@@ -69,13 +69,13 @@ spec:
             fieldRef:
               fieldPath: status.hostIP
         {{- end }}
-        {{- if $.Values.worker.custom_configs }}
+        {{- if $.Values.custom_configs.enabled }}
         envFrom:
         - secretRef:
            name: {{ $.Values.product }}-envvars
         volumeMounts:
-          {{- range $index, $config := $.Values.worker.custom_config_files}}
-          - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
+          {{- range $index, $config := $.Values.custom_configs.files}}
+          - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
             mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
@@ -107,12 +107,12 @@ spec:
       securityContext:
         fsGroup: {{ .Values.securityContextID }}
         runAsUser: {{ .Values.securityContextID }}
-      {{ if $.Values.worker.custom_configs -}}
+      {{ if $.Values.custom_configs.enabled -}}
       volumes:
-        {{- range $index, $config := $.Values.worker.custom_config_files}}
-        - name: {{ $.Values.product }}-{{ base $config | replace "." "-" }}-vol
+        {{- range $index, $config := $.Values.custom_configs.files}}
+        - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
           secret:           
-            secretName: {{ $.Values.product }}-{{ base $config | replace "." "-" }}
+            secretName: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}
         {{- end }}
         {{- end }}
 
