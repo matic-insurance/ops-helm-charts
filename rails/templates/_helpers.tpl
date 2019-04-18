@@ -13,6 +13,11 @@ Expand the name of the chart.
 {{- define "rails.product" -}}
 {{- .Values.product | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "rails.version" -}}
+{{- .Values.image.repository | regexFind ":.*$" | trimPrefix ":" -}}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).

@@ -10,6 +10,10 @@ Expand the name of the chart.
 {{- .Values.environment | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "nginx.version" -}}
+{{- .Values.image.repository | regexFind ":.*$" | trimPrefix ":" -}}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
