@@ -3,14 +3,14 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ include "rails.name" . }}-worker
-  {{- if .Values.reloader.enabled }}
   annotations:
+    helm.sh/chart: {{ include "rails.chart" . }}
+    {{- if .Values.reloader.enabled }}
     reloader.stakater.com/auto: "true"
-  {{- end }}
+    {{- end }}
   lables:
     environment: {{ include "rails.environment" . }}
     product: {{ .Values.product }}
-    helm.sh/chart: {{ include "rails.chart" . }}
     app.kubernetes.io/name: {{ include "rails.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
