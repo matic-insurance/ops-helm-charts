@@ -3,25 +3,28 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ include "rails.name" . }}-worker
+  {{- if .Values.reloader.enabled }}
   annotations:
-    helm.sh/chart: {{ include "rails.chart" . }}
-    {{- if .Values.reloader.enabled }}
     reloader.stakater.com/auto: "true"
-    {{- end }}
-  lables:
-    environment: {{ include "rails.environment" . }}
-    product: {{ .Values.product }}
+  {{- end }}
+  labels:
+    app: {{ include "rails.name" . }}-worker
     app.kubernetes.io/name: {{ include "rails.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app: {{ include "rails.name" . }}-worker
+    app.kubernetes.io/version: {{ .Values.image.repository }}
+    environment: {{ include "rails.environment" . }}
+    product: {{ .Values.product }}
+    helm.sh/chart: {{ include "rails.chart" . }}
 spec:
   replicas: {{ .Values.worker.replicaCount }}
   selector:
     matchLabels:
+      app: {{ include "rails.name" . }}-worker
       app.kubernetes.io/name: {{ include "rails.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-      app: {{ include "rails.name" . }}-worker
+      environment: {{ include "rails.environment" . }}
+      product: {{ .Values.product }}
   minReadySeconds: {{ .Values.replica.minReadySeconds }}
   progressDeadlineSeconds: {{ .Values.replica.progressDeadlineSeconds }}
   revisionHistoryLimit: {{ .Values.replica.revisionHistoryLimit }}
@@ -30,11 +33,14 @@ spec:
   template:
     metadata:
       labels:
+        app: {{ include "rails.name" . }}-worker
         app.kubernetes.io/name: {{ include "rails.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/version: {{ .Values.image.repository }}
         environment: {{ include "rails.environment" . }}
         product: {{ .Values.product }}
-        app: {{ include "rails.name" . }}-worker
+        helm.sh/chart: {{ include "rails.chart" . }}
     spec:
       {{ if .Values.worker.migrations.enabled -}}
       initContainers:
