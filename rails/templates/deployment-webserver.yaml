@@ -99,11 +99,11 @@ spec:
           timeoutSeconds: {{ .Values.probes.timeoutSeconds }}
           periodSeconds: {{ .Values.probes.periodSeconds }}
         {{- end }}
+        resources:
+{{ toYaml .Values.webserver.resources | indent 10 }}
       securityContext:
         fsGroup: {{ .Values.securityContextID }}
         runAsUser: {{ .Values.securityContextID }}
-        resources:
-{{ toYaml .Values.webserver.resources | indent 10 }}
       {{- if .Values.image_private_registry.enabled }}
       imagePullSecrets:
        - name: {{ .Values.image_private_registry.secret }}
