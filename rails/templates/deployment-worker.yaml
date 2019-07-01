@@ -42,25 +42,6 @@ spec:
         product: {{ .Values.product }}
         helm.sh/chart: {{ include "rails.chart" . }}
     spec:
-      {{ if .Values.worker.migrations.enabled -}}
-      initContainers:
-      - name: {{ include "rails.name" . }}-migrations
-        image: {{ .Values.image.repository }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh","-c","{{ .Values.worker.migrations.command }}"]
-        {{ if .Values.custom_configs.enabled -}}
-        envFrom:
-        - secretRef:
-           name: {{ .Values.product }}-envvars
-        volumeMounts:
-          {{- range $index, $config := .Values.custom_configs.files}}
-          - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
-            mountPath: {{ $config }}
-            subPath: {{ base $config }}
-            readOnly: true
-          {{- end }}
-        {{- end }}
-      {{- end }}
       containers:
       {{- $rails_name := include "rails.name" . -}}
       {{- range $index, $command := .Values.worker.command }}

@@ -14,17 +14,17 @@ image_private_registry:
   secret: docker-login
 
 custom_configs:
-  enabled: true
+  enabled: false
   files:
   - /app/settings.yml
   - /app/config.yml
 
+migrations:
+  enabled: false
+  command: "bundle exec rake db:migrate"
+
 webserver:
   enabled: true
-  command: "bundle exec puma"
-  migrations:
-    enabled: false
-    command: "bundle exec rake db:migrate"
   command: "bundle exec puma"
   replicaCount: 1
   port: 8080
@@ -40,9 +40,6 @@ worker:
   enabled: false
   command:
   - "bundle exec sidekiq -q default -c 20"
-  migrations:
-    enabled: false
-    command: "bundle exec rake db:abort_if_pending_migrations"
   replicaCount: 1
   resources:
     requests:
