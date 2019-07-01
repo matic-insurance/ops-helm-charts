@@ -3,7 +3,7 @@ entries:
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.849898+03:00"
+    created: "2019-07-01T18:32:30.484253+03:00"
     description: A Nginx Helm chart for Kubernetes
     digest: 78989bdc62a51dbdeb5c4bbbbee4acc0baf143331be26fc011508dbe21263c8b
     name: nginx
@@ -12,7 +12,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.849145+03:00"
+    created: "2019-07-01T18:32:30.483275+03:00"
     description: A Nginx Helm chart for Kubernetes
     digest: cb23200ad67951bdc15efa3edd7a5eee47cd871288b141bd2a116a0b2dc93a8c
     name: nginx
@@ -21,7 +21,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.848602+03:00"
+    created: "2019-07-01T18:32:30.482707+03:00"
     description: A Nginx Helm chart for Kubernetes
     digest: 41a2f6ffed642396ea63b5da0474b71e7843aaa3a1c431f138164ba0c74276a3
     name: nginx
@@ -30,7 +30,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.847775+03:00"
+    created: "2019-07-01T18:32:30.481875+03:00"
     description: A Nginx Helm chart for Kubernetes
     digest: 379173ab062f1454d7bd3b137f7a3e79cde253cece5df70a249cf188ef7d7f2a
     name: nginx
@@ -40,7 +40,16 @@ entries:
   rails:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.851537+03:00"
+    created: "2019-07-01T18:32:30.486495+03:00"
+    description: A Helm chart deploying Ruby on Rails app to Kubernetes
+    digest: e8594db309a4a592b5f234bfc976371aca84655341d6666eaebec6e748a60f39
+    name: rails
+    urls:
+    - https://matic-insurance.github.io/ops-helm-charts/rails-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-07-01T18:32:30.486098+03:00"
     description: A Helm chart deploying Ruby on Rails app to Kubernetes
     digest: ce7bac8bda5288647f52e8587134daf28444dbd601eed8d84ec5018212f9c852
     name: rails
@@ -49,7 +58,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.85122+03:00"
+    created: "2019-07-01T18:32:30.485506+03:00"
     description: A Helm chart deploying Ruby on Rails app to Kubernetes
     digest: c8951252ea2508f6dc50d8aaccaac49bf0541804051da4af4bb4c8112c9f508d
     name: rails
@@ -58,11 +67,11 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-07-01T14:55:18.85058+03:00"
+    created: "2019-07-01T18:32:30.484912+03:00"
     description: A Helm chart deploying Ruby on Rails app to Kubernetes
     digest: 7311cebfc0cbbb05eb50bda20e46078e553f3855470561ee0de2a26b1199df5e
     name: rails
     urls:
     - https://matic-insurance.github.io/ops-helm-charts/rails-0.1.8.tgz
     version: 0.1.8
-generated: "2019-07-01T14:55:18.845572+03:00"
+generated: "2019-07-01T18:32:30.48002+03:00"

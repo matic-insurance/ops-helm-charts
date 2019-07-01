@@ -46,6 +46,10 @@ spec:
           {{- end }}
         {{- end }}
       restartPolicy: Never
+      {{- if .Values.image_private_registry.enabled }}
+      imagePullSecrets:
+       - name: {{ .Values.image_private_registry.secret }}
+      {{- end }}
       {{ if $.Values.custom_configs.enabled -}}
       volumes:
         {{- range $index, $config := $.Values.custom_configs.files}}
