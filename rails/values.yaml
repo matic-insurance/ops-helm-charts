@@ -23,6 +23,11 @@ migrations:
   enabled: false
   command: "bundle exec rake db:migrate"
 
+ingress:
+  enabled: false
+  type: nginx-internal
+  host: myhost.local
+
 webserver:
   enabled: true
   command: "bundle exec puma"
