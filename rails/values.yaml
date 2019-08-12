@@ -21,7 +21,7 @@ custom_configs:
 
 migrations:
   enabled: false
-  command: 
+  command:
   - "bundle exec rake db:migrate"
 
 ingress:
