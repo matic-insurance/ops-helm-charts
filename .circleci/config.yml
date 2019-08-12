@@ -8,7 +8,7 @@ jobs:
       - run:
           name: lint
           command: |
-            git remote add k8s https://matic-insurance.github.io/ops-helm-charts
+            git remote add k8s https://github.com/matic-insurance/ops-helm-charts
             git fetch k8s master
             ct lint --config test/ct.yaml
 workflows:
