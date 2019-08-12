@@ -30,7 +30,7 @@ spec:
         helm.sh/chart: {{ include "rails.chart" . }}
     spec:
       containers:
-      - name: {{ include "rails.name" . }}-migrations
+      - name:
         image: {{ .Values.image.repository }}
         command: ["sh","-c","{{ .Values.migrations.command }}"]
         {{ if .Values.custom_configs.enabled -}}
