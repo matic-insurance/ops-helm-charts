@@ -4,3 +4,4 @@ description: A Nginx Helm chart for Kubernetes
 home: https://matic-insurance.github.io/ops-helm-charts
 name: nginx
 version: 0.1.3
+

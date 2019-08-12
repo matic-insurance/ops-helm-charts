@@ -21,7 +21,7 @@ ports:
 
 ssl:
   enabled: false
-  cert_domains: 
+  cert_domains:
     - example.com
     - test.com
 
@@ -34,9 +34,9 @@ reloader:
 
 replica:
   replicaCount: 1
-  minReadySeconds: 1 #minimum number of seconds before Kubernetes starts considering the Pods healthy
-  progressDeadlineSeconds: 60 #how much the Deployment has to wait before it deduces that it cannot progress due to a failure to run a Pod”
-  revisionHistoryLimit: 5 #number of ReplicaSet we can rollback
+  minReadySeconds: 1  # minimum number of seconds before Kubernetes starts considering the Pods healthy
+  progressDeadlineSeconds: 60 # how much the Deployment has to wait before it deduces that it cannot progress due to a failure to run a Pod”
+  revisionHistoryLimit: 5 # number of ReplicaSet we can rollback
   strategy: RollingUpdate
 
 probes:
@@ -50,8 +50,7 @@ probes:
 resources:
   requests:
     memory: 128Mi
-    cpu: 100m 
+    cpu: 100m
   limits:
     memory: 128Mi
     cpu: 100m
-
