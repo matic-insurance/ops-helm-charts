@@ -1,4 +1,4 @@
-remote: origin
+remote: k8s
 target-branch: master
 validate-maintainers: false
 charts:

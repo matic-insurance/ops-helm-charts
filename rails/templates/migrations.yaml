@@ -30,25 +30,27 @@ spec:
         helm.sh/chart: {{ include "rails.chart" . }}
     spec:
       containers:
-      - name: {{ include "rails.name" . }}-migrations
-        image: {{ .Values.image.repository }}
-        command: ["sh","-c","{{ .Values.migrations.command }}"]
-        {{ if .Values.custom_configs.enabled -}}
+      {{- $rails_name := include "rails.name" . -}}
+      {{- range $index, $command := .Values.migrations.command }}
+      - name: {{ $rails_name }}-migrations-{{ $index }}
+        image: {{ $.Values.image.repository }}
+        command: ["sh","-c","{{ $command }}"]
+        {{ if $.Values.custom_configs.enabled -}}
         envFrom:
         - secretRef:
-           name: {{ .Values.product }}-envvars
+           name: {{ $.Values.product }}-envvars
         volumeMounts:
-          {{- range $index, $config := .Values.custom_configs.files}}
+          {{- range $index, $config := $.Values.custom_configs.files}}
           - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
             mountPath: {{ $config }}
             subPath: {{ base $config }}
             readOnly: true
           {{- end }}
-        {{- end }}
+        {{- end -}}
       restartPolicy: Never
-      {{- if .Values.image_private_registry.enabled }}
+      {{- if $.Values.image_private_registry.enabled }}
       imagePullSecrets:
-       - name: {{ .Values.image_private_registry.secret }}
+       - name: {{ $.Values.image_private_registry.secret }}
       {{- end }}
       {{ if $.Values.custom_configs.enabled -}}
       volumes:
@@ -58,5 +60,5 @@ spec:
             secretName: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}
         {{- end }}
       {{- end }}
-
+      {{- end }}
 {{- end }}
