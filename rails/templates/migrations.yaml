@@ -46,7 +46,8 @@ spec:
             subPath: {{ base $config }}
             readOnly: true
           {{- end }}
-        {{- end -}}
+        {{- end }}
+      {{- end }}
       restartPolicy: Never
       {{- if $.Values.image_private_registry.enabled }}
       imagePullSecrets:
@@ -59,6 +60,5 @@ spec:
           secret:           
             secretName: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}
         {{- end }}
-      {{- end }}
       {{- end }}
 {{- end }}
