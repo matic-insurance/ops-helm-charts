@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  lint-charts:
+    docker:
+      - image: gcr.io/kubernetes-charts-ci/test-image:v3.3.2
+    steps:
+      - checkout
+      - run:
+          name: lint
+          command: |
+            git remote add k8s https://matic-insurance.github.io/ops-helm-charts
+            git fetch k8s master
+            ct lint --config test/ct.yaml

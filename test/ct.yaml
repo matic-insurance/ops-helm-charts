@@ -1,0 +1,9 @@
+remote: k8s
+target-branch: master
+validate-maintainers: false
+chart-dirs:
+  - rails
+  - nginx
+chart-repos:
+  - stable=https://matic-insurance.github.io/ops-helm-charts
+helm-extra-args: --timeout 600
