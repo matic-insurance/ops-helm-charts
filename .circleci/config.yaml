@@ -11,3 +11,8 @@ jobs:
             git remote add k8s https://matic-insurance.github.io/ops-helm-charts
             git fetch k8s master
             ct lint --config test/ct.yaml
+workflows:
+  version: 2
+  lint:
+    jobs:
+      - lint-charts
