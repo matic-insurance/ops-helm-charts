@@ -1,7 +1,7 @@
-remote: k8s
+remote: origin
 target-branch: master
 validate-maintainers: false
-chart-dirs:
+charts:
   - rails
   - nginx
 chart-repos:
