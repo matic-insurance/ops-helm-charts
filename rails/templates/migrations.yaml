@@ -56,7 +56,3 @@ spec:
         - name: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}-vol
           secret:           
             secretName: {{ $.Values.product }}{{ $config | replace "/" "-" | replace "." "-" }}
-        {{- end }}
-      {{- end }}
-
-{{- end }}
