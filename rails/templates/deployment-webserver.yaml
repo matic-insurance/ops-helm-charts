@@ -70,21 +70,14 @@ spec:
             readOnly: true
           {{- end }}
         {{- end }}
-        {{- if .Values.probes.enabled }}
+        {{- if .Values.probes.webserver.enabled }}
         readinessProbe:
           httpGet:
-            path: {{ .Values.probes.url }}
-            port: {{ .Values.probes.port }}
-          initialDelaySeconds: {{ .Values.probes.initialDelaySeconds }}
-          timeoutSeconds: {{ .Values.probes.timeoutSeconds }}
-          periodSeconds: {{ .Values.probes.periodSeconds }}
-        livenessProbe:
-          httpGet:
-            path: {{ .Values.probes.url }}
-            port: {{ .Values.probes.port }}
-          initialDelaySeconds: {{ .Values.probes.initialDelaySeconds }}
-          timeoutSeconds: {{ .Values.probes.timeoutSeconds }}
-          periodSeconds: {{ .Values.probes.periodSeconds }}
+            path: {{ .Values.probes.webserver.path }}
+            port: {{ .Values.probes.webserver.port }}
+          initialDelaySeconds: {{ .Values.probes.webserver.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.probes.webserver.timeoutSeconds }}
+          periodSeconds: {{ .Values.probes.webserver.periodSeconds }}
         {{- end }}
         resources:
 {{ toYaml .Values.webserver.resources | indent 10 }}
