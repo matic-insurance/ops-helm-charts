@@ -14,7 +14,7 @@ image_private_registry:
   secret: docker-login
 
 custom_configs:
-  enabled: false
+  enabled: true
   files:
   - /app/settings.yml
   - /app/config.yml
@@ -43,7 +43,7 @@ webserver:
       cpu: 100m
 
 worker:
-  enabled: false
+  enabled: true
   command:
   - "bundle exec sidekiq -q default -c 20"
   replicaCount: 1
@@ -74,8 +74,16 @@ datadog:
   enabled: false
 
 probes:
-  enabled: false
-  url: /status
-  initialDelaySeconds: 5
-  timeoutSeconds: 1
-  periodSeconds: 15
+  webserver: 
+    enabled: true
+    path: /status
+    port: 80
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+    periodSeconds: 15
+  worker: 
+    enabled: true
+    command: ps 1 | grep sidekiq || exit 1
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+    periodSeconds: 15
