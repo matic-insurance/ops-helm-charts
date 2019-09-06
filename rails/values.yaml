@@ -74,14 +74,14 @@ datadog:
   enabled: false
 
 probes:
-  webserver: 
+  webserver:
     enabled: true
     path: /status
     port: 80
     initialDelaySeconds: 5
     timeoutSeconds: 1
     periodSeconds: 15
-  worker: 
+  worker:
     enabled: true
     command: ps 1 | grep sidekiq || exit 1
     initialDelaySeconds: 5
