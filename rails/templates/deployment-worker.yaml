@@ -68,13 +68,13 @@ spec:
             readOnly: true
           {{- end }}
         {{- end }}
-        {{- if $.Values.probes.worker.enabled }}
+        {{- if $.Values.worker.probes.enabled }}
         readinessProbe:
           exec:
-            command: {{ $.Values.probes.worker.command }}
-          initialDelaySeconds: {{ $.Values.probes.worker.initialDelaySeconds }}
-          timeoutSeconds: {{ $.Values.probes.worker.timeoutSeconds }}
-          periodSeconds: {{ $.Values.probes.worker.periodSeconds }}
+            command: {{ $.Values.worker.probes.command }}
+          initialDelaySeconds: {{ $.Values.worker.probes.initialDelaySeconds }}
+          timeoutSeconds: {{ $.Values.worker.probes.timeoutSeconds }}
+          periodSeconds: {{ $.Values.worker.probes.periodSeconds }}
         {{- end }}
         resources:
 {{ toYaml $.Values.worker.resources | indent 10 }}

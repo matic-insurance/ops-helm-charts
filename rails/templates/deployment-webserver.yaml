@@ -70,14 +70,14 @@ spec:
             readOnly: true
           {{- end }}
         {{- end }}
-        {{- if .Values.probes.webserver.enabled }}
+        {{- if .Values.webserver.probes.enabled }}
         readinessProbe:
           httpGet:
-            path: {{ .Values.probes.webserver.path }}
-            port: {{ .Values.probes.webserver.port }}
-          initialDelaySeconds: {{ .Values.probes.webserver.initialDelaySeconds }}
-          timeoutSeconds: {{ .Values.probes.webserver.timeoutSeconds }}
-          periodSeconds: {{ .Values.probes.webserver.periodSeconds }}
+            path: {{ .Values.webserver.probes.path }}
+            port: {{ .Values.webserver.probes.port }}
+          initialDelaySeconds: {{ .Values.webserver.probes.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.webserver.probes.timeoutSeconds }}
+          periodSeconds: {{ .Values.webserver.probes.periodSeconds }}
         {{- end }}
         resources:
 {{ toYaml .Values.webserver.resources | indent 10 }}
