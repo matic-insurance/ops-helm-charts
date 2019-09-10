@@ -63,7 +63,7 @@ worker:
       cpu: 100m
   probes:
     enabled: true
-    command: [ "ps 1 | grep sidekiq || exit 1" ]
+    command: ["ps 1 | grep sidekiq || exit 1"]
     initialDelaySeconds: 5
     timeoutSeconds: 1
     periodSeconds: 15
