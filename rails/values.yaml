@@ -21,7 +21,7 @@ custom_configs:
 
 migrations:
   enabled: false
-  command:
+  commands:
   - "bundle exec rake db:migrate"
 
 ingress:
@@ -42,9 +42,9 @@ webserver:
       memory: 128Mi
       cpu: 100m
   probes:
-    enabled: false
-    path: /status
-    port: 80
+    enabled: true
+    path: /
+    port: 8080
     initialDelaySeconds: 5
     timeoutSeconds: 1
     periodSeconds: 15

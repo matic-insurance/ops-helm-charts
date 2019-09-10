@@ -30,20 +30,8 @@ install_tiller() {
     echo
 }
 
-install_local-path-provisioner() {
-    # kind doesn't support Dynamic PVC provisioning yet, this is one way to get it working
-    # https://github.com/rancher/local-path-provisioner
-
-    # Remove default storage class. It will be recreated by local-path-provisioner
-    kubectl delete storageclass standard
-
-    echo 'Installing local-path-provisioner...'
-    kubectl apply -f examples/kind/test/local-path-provisioner.yaml
-    echo
-}
-
 test_e2e() {
-    helm install -n rails ./rails --debug
+    helm install -n rails ./rails --debug --wait
     echo
 }
 
@@ -56,7 +44,6 @@ main() {
     trap cleanup EXIT
 
     create_kind_cluster
-    #install_local-path-provisioner
     install_tiller
     test_e2e
 }

@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run:
           name: Run e2e test
-          command: bash ./test/kind.sh
+          command: bash ./test/e2e-kind.sh
 
 workflows:
   version: 2
