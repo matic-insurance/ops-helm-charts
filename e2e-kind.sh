@@ -30,9 +30,9 @@ install_tiller() {
     echo
 }
 
-test_e2e() {
-    helm install -n rails ./rails --debug --wait
-    echo
+helm_e2e() {
+    go get github.com/ghodss/yaml
+    go run test/helm/main.go
 }
 
 cleanup() {
@@ -41,11 +41,10 @@ cleanup() {
 }
 
 main() {
-    trap cleanup EXIT
-
-    create_kind_cluster
-    install_tiller
-    test_e2e
+ #   trap cleanup EXIT
+ #   create_kind_cluster
+ #   install_tiller
+    helm_e2e
 }
 
 main
