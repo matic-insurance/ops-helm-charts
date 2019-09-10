@@ -41,9 +41,9 @@ cleanup() {
 }
 
 main() {
- #   trap cleanup EXIT
- #   create_kind_cluster
- #   install_tiller
+    trap cleanup EXIT
+    create_kind_cluster
+    install_tiller
     helm_e2e
 }
 
