@@ -11,8 +11,28 @@ jobs:
             git remote add k8s https://github.com/matic-insurance/ops-helm-charts
             git fetch k8s master
             ct lint --config test/ct.yaml
+  test-charts:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - run:
+          name: Install tools
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
+            curl -sSLo kind "https://github.com/kubernetes-sigs/kind/releases/download/0.2.1/kind-linux-amd64"
+            chmod +x kind
+            sudo mv kind /usr/local/bin/kind
+      - checkout
+      - run:
+          name: Run e2e test
+          command: bash ./test/kind.sh
+
 workflows:
   version: 2
   lint:
     jobs:
       - lint-charts
+      - test-charts
