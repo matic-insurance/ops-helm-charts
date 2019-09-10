@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       {{- $rails_name := include "rails.name" . -}}
-      {{- range $index, $command := .Values.migrations.command }}
+      {{- range $index, $command := .Values.migrations.commands }}
       - name: {{ $rails_name }}-migrations-{{ $index }}
         image: {{ $.Values.image.repository }}
         command: ["sh","-c","{{ $command }}"]

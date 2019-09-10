@@ -14,14 +14,14 @@ image_private_registry:
   secret: docker-login
 
 custom_configs:
-  enabled: true
+  enabled: false
   files:
   - /app/settings.yml
   - /app/config.yml
 
 migrations:
   enabled: false
-  command:
+  commands:
   - "bundle exec rake db:migrate"
 
 ingress:
@@ -41,9 +41,16 @@ webserver:
     limits:
       memory: 128Mi
       cpu: 100m
+  probes:
+    enabled: true
+    path: /
+    port: 8080
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+    periodSeconds: 15
 
 worker:
-  enabled: true
+  enabled: false
   command:
   - "bundle exec sidekiq -q default -c 20"
   replicaCount: 1
@@ -54,6 +61,12 @@ worker:
     limits:
       memory: 128Mi
       cpu: 100m
+  probes:
+    enabled: false
+    command: ["ps 1 | grep sidekiq || exit 1"]
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+    periodSeconds: 15
 
 reloader:
   enabled: false
@@ -72,18 +85,3 @@ securityContextID: 100
 
 datadog:
   enabled: false
-
-probes:
-  webserver:
-    enabled: true
-    path: /status
-    port: 80
-    initialDelaySeconds: 5
-    timeoutSeconds: 1
-    periodSeconds: 15
-  worker:
-    enabled: true
-    command: ps 1 | grep sidekiq || exit 1
-    initialDelaySeconds: 5
-    timeoutSeconds: 1
-    periodSeconds: 15
