@@ -25,7 +25,7 @@ ssl:
     - example.com
     - test.com
 
-#LoadBalancer service type only
+# LoadBalancer service type only
 whitelist:
   enabled: false
   networks:
