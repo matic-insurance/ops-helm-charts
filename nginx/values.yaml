@@ -25,6 +25,12 @@ ssl:
     - example.com
     - test.com
 
+# LoadBalancer service type only
+whitelist:
+  enabled: false
+  networks:
+    - 10.0.0.0/16
+
 custom_configs:
   enabled: false
   configmap_name: configmap-nginx
