@@ -34,7 +34,14 @@ spec:
       {{- range $index, $command := .Values.migrations.commands }}
       - name: {{ $rails_name }}-migrations-{{ $index }}
         image: {{ $.Values.image.repository }}
-        command: ["sh","-c","{{ $command }}"]
+        command: ["sh","-c","{{ $command }}"]     
+        {{- if .Values.datadog.enabled }}
+        env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        {{- end }}
         {{ if $.Values.custom_configs.enabled -}}
         envFrom:
         - secretRef:
