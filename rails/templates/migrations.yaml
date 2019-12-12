@@ -35,7 +35,7 @@ spec:
       - name: {{ $rails_name }}-migrations-{{ $index }}
         image: {{ $.Values.image.repository }}
         command: ["sh","-c","{{ $command }}"]     
-        {{- if .Values.datadog.enabled }}
+        {{- if $.Values.datadog.enabled }}
         env:
         - name: DD_AGENT_HOST
           valueFrom:
