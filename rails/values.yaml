@@ -17,7 +17,7 @@ custom_configs:
   enabled: false
   files:
   - /app/settings.yml
-  - /app/config.yml
+  - /app/some_config.yml
 
 migrations:
   enabled: false
@@ -39,13 +39,13 @@ webserver:
       memory: 128Mi
       cpu: 100m
     limits:
-      memory: 128Mi
+      memory: 256Mi
       cpu: 100m
   probes:
     enabled: true
     path: /
     port: 8080
-    initialDelaySeconds: 5
+    initialDelaySeconds: 10
     timeoutSeconds: 1
     periodSeconds: 15
 
