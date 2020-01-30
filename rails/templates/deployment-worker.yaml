@@ -53,7 +53,7 @@ spec:
         {{- else }}
         command: ["sh","-c","{{ $command }}"]
         {{- end }}
-        {{- if $.Values.datadog.enabled -}}
+        {{ if $.Values.datadog.enabled -}}
         env:
         - name: DD_AGENT_HOST
           valueFrom:

@@ -56,7 +56,7 @@ spec:
         env:
         - name: PORT
           value: {{ .Values.webserver.port | quote }}       
-        {{- if .Values.datadog.enabled }}
+        {{ if .Values.datadog.enabled }}
         - name: DD_AGENT_HOST
           valueFrom:
             fieldRef:
