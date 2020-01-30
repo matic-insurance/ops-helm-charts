@@ -85,3 +85,5 @@ securityContextID: 100
 
 datadog:
   enabled: false
+
+use_bash: false

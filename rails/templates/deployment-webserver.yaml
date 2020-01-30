@@ -46,7 +46,11 @@ spec:
       - name: {{ include "rails.name" . }}-webserver
         image: {{ .Values.image.repository }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.use_bash }}
+        command: ["bash","-c","{{ .Values.webserver.command }}"]
+        {{- else }}
         command: ["sh","-c","{{ .Values.webserver.command }}"]
+        {{- end }}
         ports:
         - containerPort: {{ .Values.webserver.port }}
         env:

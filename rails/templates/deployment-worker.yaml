@@ -48,8 +48,12 @@ spec:
       - name: {{ $rails_name }}-worker-{{ $index }}
         image: {{ $.Values.image.repository }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        {{- if $.Values.use_bash }}
+        command: ["bash","-c","{{ $command }}"]
+        {{- else }}
         command: ["sh","-c","{{ $command }}"]
-        {{ if $.Values.datadog.enabled -}}
+        {{- end }}
+        {{- if $.Values.datadog.enabled -}}
         env:
         - name: DD_AGENT_HOST
           valueFrom:
