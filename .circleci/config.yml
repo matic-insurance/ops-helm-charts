@@ -1,54 +1,18 @@
-# version: 2
-# jobs:
-#   lint-charts:
-#     docker:
-#       - image: gcr.io/kubernetes-charts-ci/test-image:v3.3.2
-#     steps:
-#       - checkout
-#       - run:
-#           name: lint
-#           command: |
-#             git remote add k8s https://github.com/matic-insurance/ops-helm-charts
-#             git fetch k8s master
-#             ct lint --config test/ct.yaml
-#   test-charts:
-#     machine:
-#       image: ubuntu-1604:201903-01
-#     steps:
-#       - run:
-#           name: Install tools
-#           command: |
-#             mkdir /home/circleci/.go_workspace/bin
-#             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-#             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-#             chmod +x ./kubectl
-#             sudo mv ./kubectl /usr/local/bin/kubectl
-#             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
-#             curl -sSLo kind "https://github.com/kubernetes-sigs/kind/releases/download/0.2.1/kind-linux-amd64"
-#             chmod +x kind
-#             sudo mv kind /usr/local/bin/kind
-#       - checkout
-#       - run:
-#           name: Run e2e tests
-#           command: bash e2e-kind.sh
-
+version: 2.1
 
 jobs:
-  build:
-    machine:
-      image: ubuntu-1604:201903-01
+
+  ruby-linters:
+    name: Test
+    context: global
+    docker:
+      - image: cimg/ruby:2.7.4
+    resource_class: small
     steps:
       - checkout
       - run:
-          name: test echo
+          name: Check SECRET
+          command: echo $SECRET
+      - run:
+          name: Check AWS_REGION
           command: echo $AWS_REGION
-          context: 
-            - global
-
-workflows:
-  version: 2
-  lint:
-    jobs:
-      - build
-      # - lint-charts
-      # - test-charts
