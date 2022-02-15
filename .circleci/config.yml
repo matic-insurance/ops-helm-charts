@@ -5,9 +5,8 @@ jobs:
   ruby-linters:
     name: Test
     context: global
-    docker:
-      - image: cimg/ruby:2.7.4
-    resource_class: small
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
