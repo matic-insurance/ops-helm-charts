@@ -45,6 +45,24 @@ jobs:
           context: 
             - global
 
+
+version: '2.1'
+orbs:
+  aws-cli: circleci/aws-cli@2.0
+jobs:
+  aws-cli-example:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile-name: example
+      - run: echo "Run your code here"
+workflows:
+  aws-cli:
+    jobs:
+      - aws-cli-example:
+          context: global
+
 workflows:
   version: 2
   lint:
