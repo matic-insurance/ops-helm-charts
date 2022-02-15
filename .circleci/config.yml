@@ -41,8 +41,9 @@ jobs:
       - checkout
       - run:
           name: test echo
-          command: |
-            echo $SECRET
+          command: echo $AWS_REGION
+          context: 
+            - global
 
 workflows:
   version: 2
