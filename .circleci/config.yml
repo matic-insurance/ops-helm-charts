@@ -48,5 +48,6 @@ workflows:
   version: 2
   lint:
     jobs:
-      - lint-charts
-      - test-charts
+      - build
+      # - lint-charts
+      # - test-charts
