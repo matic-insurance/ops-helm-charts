@@ -17,7 +17,10 @@ jobs:
           command: echo $AWS_REGION
 
 workflows:
- get-env-test:
+  test.test:
+    when:
+      not:
+        equal: [ master, << pipeline.git.branch >> ]
     jobs:
       - ruby-linters:
           name: ruby-linters
