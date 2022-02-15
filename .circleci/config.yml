@@ -15,3 +15,9 @@ jobs:
       - run:
           name: Check AWS_REGION
           command: echo $AWS_REGION
+
+workflows:
+    jobs:
+      - ruby-linters:
+          name: ruby-linters
+          context: global
