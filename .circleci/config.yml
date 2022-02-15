@@ -16,12 +16,12 @@ jobs:
           name: Check AWS_REGION
           command: echo $AWS_REGION
 
-# workflows:
-#   test.test:
-#     when:
-#       not:
-#         equal: [ master, << pipeline.git.branch >> ]
-#     jobs:
-#       - ruby-linters:
-#           name: ruby-linters
-#           context: global
+workflows:
+  test.test:
+    when:
+      not:
+        equal: [ master, << pipeline.git.branch >> ]
+    jobs:
+      - ruby-linters:
+          name: ruby-linters
+          #context: global
