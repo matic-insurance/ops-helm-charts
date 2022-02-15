@@ -3,7 +3,7 @@ version: 2.1
 jobs:
 
   ruby-linters:
-    name: Test
+#    name: Test
 #    context: global
     machine:
       image: ubuntu-1604:201903-01
