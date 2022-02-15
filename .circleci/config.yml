@@ -17,7 +17,7 @@ jobs:
           command: echo $AWS_REGION
 
 workflows:
- get-env:
+ get-env-test:
     jobs:
       - ruby-linters:
           name: ruby-linters
