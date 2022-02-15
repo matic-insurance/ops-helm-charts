@@ -33,17 +33,7 @@
 #           command: bash e2e-kind.sh
 
 
-jobs:
-  build:
-    machine:
-      image: ubuntu-1604:201903-01
-    steps:
-      - checkout
-      - run:
-          name: test echo
-          command: echo $AWS_REGION
-          context: 
-            - global
+/
 
 
 version: '2.1'
@@ -57,16 +47,9 @@ jobs:
       - aws-cli/setup:
           profile-name: example
       - run: echo "Run your code here"
+
 workflows:
   aws-cli:
     jobs:
       - aws-cli-example:
           context: global
-
-workflows:
-  version: 2
-  lint:
-    jobs:
-      - build
-      # - lint-charts
-      # - test-charts
