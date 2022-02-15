@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run:
           name: Check SECRET
-          command: echo $SECRET
+          command: printenv
       - run:
           name: Check AWS_REGION
           command: echo $AWS_REGION
