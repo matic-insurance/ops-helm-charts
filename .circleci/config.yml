@@ -24,4 +24,4 @@ workflows:
     jobs:
       - ruby-linters:
           name: ruby-linters
-          #context: global
+          context: automation
