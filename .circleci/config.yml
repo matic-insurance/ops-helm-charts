@@ -35,8 +35,8 @@
 
 jobs:
   build:
-    docker:
-      - image: cimg/base:2022.02
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
