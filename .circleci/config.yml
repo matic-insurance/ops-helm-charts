@@ -48,5 +48,5 @@ jobs:
 workflows:
   aws-cli:
     jobs:
-      - aws-cli-example:
+      - aws-cli-example
           #context: context1
