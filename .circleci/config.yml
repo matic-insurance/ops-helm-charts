@@ -49,4 +49,4 @@ workflows:
   aws-cli:
     jobs:
       - aws-cli-example:
-          context: context1
+          #context: context1
