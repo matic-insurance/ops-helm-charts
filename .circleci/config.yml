@@ -42,7 +42,7 @@ jobs:
       - checkout
       - aws-cli/setup:
           profile-name: example
-      - run: echo "Run your code here"
+      - run: echo $TEST_SECRET
 
 workflows:
   aws-cli:
